@@ -1,0 +1,12 @@
+@import "../../assets/styles/variables";
+@import "../../assets/styles/mixins";
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+
+  & + * {
+    margin-left: rem(56px);
+  }
+}

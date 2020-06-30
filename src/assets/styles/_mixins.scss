@@ -1,0 +1,85 @@
+@import "variables";
+
+@function parseInt($n) {
+  @return $n / ($n * 0 + 1);
+}
+
+// example: margin: rem(35px auto 2px 18px)
+@function rem($px) {
+  $font-size-base: parseInt($base-font-size);
+  $i: "";
+  @each $p in $px {
+    @if $p != "auto" {
+      $p: (parseInt($p) / $font-size-base) + rem;
+    }
+    $i: #{$i} #{$p};
+  }
+  @return $i;
+}
+
+%clear-button {
+  padding: 0;
+  background: none;
+  border: none;
+  color: inherit;
+}
+
+@mixin icon-button($size: $size-button) {
+  @extend %clear-button;
+  background-size: rem($size $size);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: rem($size * 2);
+  width: rem($size * 2);
+  @include transition;
+
+  &:hover,
+  &:focus {
+    transform: scale(1.2);
+  }
+}
+
+// Элемент, который надо скрыть, но оставить для читалок
+@mixin sr-clear {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+// Текст внутри элемента, который надо скрыть, но оставить для читалок
+@mixin sr-text {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@mixin transition($property: all, $duration: 0.3s) {
+  transition: $property $duration ease;
+}
+
+%before {
+  position: relative;
+  z-index: 1;
+
+  &:before {
+    content: "";
+    position: absolute;
+    z-index: 2;
+  }
+}
+
+%after {
+  position: relative;
+  z-index: 2;
+
+  &:after {
+    content: "";
+    position: absolute;
+    z-index: 3;
+  }
+}

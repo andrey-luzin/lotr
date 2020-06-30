@@ -1,0 +1,78 @@
+@import "../../assets/styles/variables";
+@import "../../assets/styles/mixins";
+
+$offset-top: 35px;
+$offset-bottom: 20px;
+
+.utility-tablet {
+  $root: &;
+  display: flex;
+
+  position: relative;
+  z-index: $z-util;
+  background-color: $color-dark;
+  border-top: rem(2px) solid $color-light;
+  height: calc(#{rem($size-card-height + $offset-top + $offset-bottom)});
+  padding: rem(0 32px 0 25px);
+  overflow: hidden;
+  @include transition();
+
+  &--is-hidden {
+    height: rem($size-button * 2);
+    padding-top: rem(2px);
+    padding-bottom: rem(2px);
+
+    #{$root}__inner {
+      padding-top: 0;
+      padding-bottom: 0;
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    #{$root}__tools-list {
+      padding-top: 0;
+    }
+  }
+
+  &__tools-list {
+    margin-left: auto;;
+    padding-top: $offset-top;
+    @include transition();
+  }
+
+  &__tool {
+    cursor: pointer;
+    @include transition();
+
+    &--resize {
+      overflow: hidden;
+      @include icon-button;
+      background-image: url('./assets/imgs/resizing.svg');
+
+      #{$root}--is-hidden & {
+        transform: translateY(35%) scale(1.15);
+        background-position: 50% -30%;
+        transform-origin: 50% 50%;
+
+        &:hover,
+        &:focus {
+          transform: translateY(40%) scale(1.35);
+        }
+      }
+    }
+
+    &--helper {
+    }
+  }
+
+  &__inner {
+    padding: rem(35px 40px 20px 15px);
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+    @include transition();
+  }
+}

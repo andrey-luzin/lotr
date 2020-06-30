@@ -1,0 +1,98 @@
+@import "./variables";
+@import "./mixins";
+
+$containerWidth: 1280px;
+$maxColValue: 12;
+$marginOffset: 40px;
+
+// функции и миксины для grid
+@function nthChildAdder($item) {
+    @return "&:nth-child(" + $item + ")";
+  }
+  
+  @function nthChildNamer($array) {
+    $x: "";
+    @each $i in $array {
+      @if $x != "" {
+          $x: append($x, "," + nthChildAdder($i));
+      }
+      @else{
+          $x: append($x, nthChildAdder($i));
+      }
+    }
+    @return $x;
+  }
+  
+  // для определенной сетки нужно в стилях задать после какого элмента будет перенос. пример  @include nthCol("4n")
+  @mixin nthCol($array) {
+      #{nthChildNamer($array)} {
+          margin-right: 0;
+      }
+  }
+  
+  @function calcCol($n, $m) {
+    @return ($n / $m) * 100%;
+  }
+  
+  @function calcMargin($o, $n, $m) {
+    @return $o - ($o * $n / $m);
+  }
+  
+  @mixin cols($maxNum, $offset) {
+    @for $num from 1 to $maxNum + 1 {
+      &--#{$num} {
+        max-width: calc(#{calcCol($num, $maxColValue)} - #{calcMargin($offset, $num, $maxColValue)});
+        flex-basis: calc(#{calcCol($num, $maxColValue)} - #{calcMargin($offset, $num, $maxColValue)});
+        flex-grow: 0;
+        flex-shrink: 0;
+      }
+    }
+  
+    &--#{$maxNum} {
+      margin-right: 0 !important;
+    }
+  }
+
+.container {
+    max-width: $containerWidth;
+    width: 100%;
+    padding: 0 50px;
+    margin: 0 auto;
+
+    &--full {
+        max-width: 100%;
+    }
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+
+    &--center {
+        text-align: center;
+        justify-content: center;
+    }
+
+    &--verticalCenter {
+        align-items: center;
+    }
+}
+
+.col {
+    max-width: 100%;
+    flex-grow: 1;
+    flex-basis: 0;
+    margin-right: $marginOffset;
+
+    &:last-child {
+        margin-right: 0 !important;
+    }
+
+    @include cols($maxColValue, $marginOffset);
+
+    .row--smallOffset & {
+        $marginOffset: 20px;
+        margin-right: $marginOffset;
+        @include cols($maxColValue, $marginOffset);
+    }
+}

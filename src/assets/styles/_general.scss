@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap');
+
+@import './variables';
+@import './helpers';
+@import './mixins';
+@import './grid';
+
+body {
+  color: $color-light;
+  font-family: 'PT Serif', serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: rgba($color-dark, .8);
+  background-size: cover;
+  background-position: 50% 50%;
+
+  @supports (background-blend-mode: multiply) {
+    background-blend-mode: multiply;
+    background-image: url('../imgs/background.jpg');
+  }
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+}

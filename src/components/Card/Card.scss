@@ -1,0 +1,50 @@
+@import "../../assets/styles/variables";
+@import "../../assets/styles/mixins";
+
+.card {
+  $root: &;
+
+  height: rem($size-card-height);
+  margin-right: rem(10px);
+  position: relative;
+  cursor: pointer;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &--isClosed {
+    cursor: default;
+  }
+
+  &__wrapper {
+    max-height: 100%;
+  }
+
+  &__inside {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color-dark, .5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: rem(10px);
+    box-sizing: border-box;
+    opacity: 0;
+    visibility: hidden;
+    @include transition;
+    overflow: hidden;
+  }
+
+  &:hover,
+  &:focus {
+    #{$root}__inside {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}

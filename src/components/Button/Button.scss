@@ -1,0 +1,52 @@
+@import "../../assets/styles/variables";
+@import "../../assets/styles/mixins";
+
+.button  {
+  @extend %clear-button;
+  font-size: rem(20px);
+  border: 1px solid $color-light;
+  padding: rem(10px 20px);
+  cursor: pointer;
+  @include transition;
+  background-color: rgba($color-dark, .7);
+  max-width: rem(240px);
+
+  &:hover,
+  &:focus {
+    transform: scale(1.1);
+  }
+
+  &:focus,
+  &:active {
+    opacity: .8;
+  }
+
+  & + & {
+    margin-top: rem(24px);
+  }
+
+  &--inside {
+    border: none;
+    font-size: rem(14px);
+    word-wrap: break-word;
+    white-space: normal;
+    hyphens: auto;
+    @extend %after;
+
+    &:not(:last-child):after {
+      width: 100%;
+      height: 1px;
+      background-color: $color-light;
+      left: 0;
+      bottom: rem(-12px);
+      @include transition;
+    }
+
+    &:hover,
+    &:focus {
+      &:not(:last-child):after {
+        transform: scale(0.92);
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+$base-font-size: 16px;
+
+// Colours
+$color-burnt-umber: #882926;
+
+$color-gray: #333333;
+$color-gray-2: #4f4f4f;
+$color-gray-3: #828282;
+$color-gray-4: #bdbdbd;
+$color-gray-5: #e0e0e0;
+
+// Семантические цвета
+$color-light: #ffffff;
+$color-dark: #000000;
+
+$color-main: $color-light;
+$color-secondary: $color-burnt-umber;
+$color-warning: orange;
+$color-alert: red;
+
+// Media queries
+$media-mobile: 375px;
+$media-v-tablet: 768px;
+$media-tablet: 1024px;
+$media-desktop: 1366px;
+
+// Z-index
+$z-minus: -1;
+$z-default: 1;
+$z-util: 50;
+$z-modal: 100;
+
+// Sizes
+$size-card-height: 224px;
+$size-button: 30px;
