@@ -9,8 +9,6 @@ import CardType from 'constants/CardType';
 
 import damage from 'assets/imgs/cards/damage.jpeg';
 import fear from 'assets/imgs/cards/fear.jpeg';
-import prepared from 'assets/imgs/cards/card.jpeg';
-import item from 'assets/imgs/cards/item.jpeg';
 import base from 'assets/imgs/cards/base.jpeg';
 
 import './Card.scss';
@@ -25,9 +23,9 @@ const getType = (type) => {
     case CardType.FEAR:
       return fear;
     case CardType.PREPARED:
-      return prepared;
+      return base;
     case CardType.ITEM:
-      return item;
+      return base;
     default:
       return base;
   }
@@ -94,7 +92,6 @@ const Card = ({
         (isOpened && isModalOpen) &&
         <Modal onRequestClose={toggleModal}>
           <ButtonGroup>
-            <Button text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque accusamus atque, odit, nihil numquam blanditiis magnam suscipit aliquid optio aspernatur, eos cum minima dolorum rerum. Dignissimos fugiat culpa inventore illum!" />
             <Button text="Скинуть" />
           </ButtonGroup>
           <CardImage
@@ -106,8 +103,8 @@ const Card = ({
         (!isOpened && !isNewValue) &&
         <div className="card__inside">
           <ButtonGroup>
-          <Button text="Перевернуть" modifier="inside" />
-          <Button text="Скинуть" modifier="inside" />
+            <Button text="Перевернуть" modifier="inside" />
+            <Button text="Скинуть" modifier="inside" />
           </ButtonGroup>
         </div>
       }

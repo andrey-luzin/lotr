@@ -8,7 +8,7 @@ const Button = ({
 }) => {
   return (
     <button className={`button ${modifier ? 'button--' + modifier : ''}`}>
-      {text}
+      <span className="button__inner">{text}</span>
     </button>
   )
 };

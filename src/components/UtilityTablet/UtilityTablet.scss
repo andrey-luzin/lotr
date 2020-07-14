@@ -49,14 +49,15 @@ $offset-bottom: 20px;
       @include icon-button;
       background-image: url('./assets/imgs/resizing.svg');
 
-      #{$root}--is-hidden & {
-        transform: translateY(35%) scale(1.15);
-        background-position: 50% -30%;
+      #{$root}--is-open & {
+        transform: translateY(20%) scale(1.15);
+        background-position: 50% rem(-10px);
         transform-origin: 50% 50%;
+        height: rem(40px);
 
         &:hover,
         &:focus {
-          transform: translateY(40%) scale(1.35);
+          transform: translateY(25%) scale(1.35);
         }
       }
     }

@@ -21,7 +21,7 @@ const UtilityTablet = ({
     <div className={
       `utility-tablet
       ${className}
-      ${utilsIsHidden ? '' : 'utility-tablet--is-hidden'}`
+      ${utilsIsHidden ? 'utility-tablet--is-open' : 'utility-tablet--is-hidden'}`
     }>
       <div className="utility-tablet__inner">
         <CardGroup

@@ -30,9 +30,10 @@ const CardGroup = ({
             return (
               <Card
                 id={+listItem}
-                key={index}
+                key={`${index}_${listItem}`}
+                // If not opened, then add group type
                 type={
-                  `${type}${group.type === CardType.OPENED ? `-${group.type}` : ''}`
+                  `${type}${group.type === CardType.CLOSED ? '' : `-${group.type}`}`
                 }
                 role={role}
                 hero={hero}
@@ -44,11 +45,12 @@ const CardGroup = ({
         list.map((listItem, index) => 
           <Card
             id={+listItem}
-            key={index}
+            key={`${index}_${listItem}`}
             type={type}
             role={role}
             hero={hero}
-            isOpened={false}
+            isOpened={isOpened}
+            isNewValue={isNewValue}
           />
         )
       }

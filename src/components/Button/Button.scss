@@ -1,11 +1,13 @@
 @import "../../assets/styles/variables";
 @import "../../assets/styles/mixins";
 
-.button  {
+.button {
+  $root: &;
+
   @extend %clear-button;
   font-size: rem(20px);
   border: 1px solid $color-light;
-  padding: rem(10px 20px);
+  padding: rem(10px 20px 14px);
   cursor: pointer;
   @include transition;
   background-color: rgba($color-dark, .7);
@@ -39,14 +41,22 @@
       background-color: $color-light;
       left: 0;
       bottom: rem(-12px);
-      @include transition;
     }
 
     &:hover,
     &:focus {
-      &:not(:last-child):after {
-        transform: scale(0.92);
+      transform: none;
+      
+      #{$root}__inner {
+        transform: scale(1.25) translateZ(0);
       }
     }
+  }
+
+  &__inner {
+    display: inline-block;
+    @include transition;
+    transform-origin: 50% 50%;
+    transform: translateZ(0);
   }
 }
