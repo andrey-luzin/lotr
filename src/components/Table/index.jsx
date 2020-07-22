@@ -41,23 +41,30 @@ const Bilbo = {
   items: [1,2,3]
 }
 
-// const Legolas = {
-//   person: "Леголас",
-//   role: "Дамагер",
-//   tabletUrl: tablet,
-//   inspiration: 2,
-//   maxInspiration: 6,
-//   damage: 1,
-//   fear: 5,
-//   prepared: 0,
-//   items: 2
-// }
+const Legolas = {
+  roleId: 'hunter',
+  heroId: 'legolas',
+  hero: "Леголас",
+  role: "Охотник",
+  inspiration: 2,
+  maxInspiration: 6,
+  damage: [1],
+  fear: [1],
+  prepared: [
+    {
+      type: 'role',
+      cards: [1]
+    },
+  ],
+  items: [1]
+}
 
 const Table = () => {
   return (
     <div className="table">
       <div className="table__players-list">
         <PlayerTablet {...Bilbo} />
+        <PlayerTablet {...Legolas} />
       </div>
       <UtilityTablet className="table__utils" />
     </div>

@@ -8,8 +8,10 @@
   display: flex;
   display: grid;
   grid-template:
-    'info states' 50%
-    'info prepared' 50% / minmax(500px, 2fr) 3fr;
+    // 'info states' 50%
+    // 'info prepared' 50% / minmax(500px, 2fr) 3fr;
+    'info states' auto
+    'info prepared' auto / minmax(500px, 2fr) 3fr;
 
   &:last-child {
     padding-bottom: rem(40px);
