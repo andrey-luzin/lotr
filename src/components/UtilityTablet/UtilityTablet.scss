@@ -47,7 +47,7 @@ $offset-bottom: 20px;
     &--resize {
       overflow: hidden;
       @include icon-button;
-      background-image: url('./assets/imgs/resizing.svg');
+      background-image: url('../../assets/imgs/resizing.svg');
 
       #{$root}--is-open & {
         transform: translateY(20%) scale(1.15);

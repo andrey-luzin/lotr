@@ -1,0 +1,33 @@
+@import "../../assets/styles/variables";
+@import "../../assets/styles/mixins";
+
+.checking {
+  display: flex;
+  padding-right: rem(20px);
+  border-bottom: rem(2px) solid $color-gray-4;
+  width: 100%;
+
+  &:not(:last-child) {
+    margin-bottom: rem(40px);
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    padding-right: rem(40px);
+    margin-bottom: rem(40px);
+    font-size: rem(32px);
+    line-height: rem(40px);
+    width: 20%;
+    border-right: 1px solid $color-gray-4;
+  }
+
+  &__done {
+    margin-top: auto;
+  }
+
+  &__cards-list {
+    display: flex;
+    margin: rem(0 0 40px 40px);
+  }
+}

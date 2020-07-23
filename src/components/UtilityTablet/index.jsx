@@ -25,11 +25,6 @@ const UtilityTablet = ({
     }>
       <div className="utility-tablet__inner">
         <CardGroup
-          title={CardName.INTELLIGANCE}
-          type={CardType.INTELLIGANCE}
-          isNewValue
-        />
-        <CardGroup
           title={CardName.DAMAGE}
           type={CardType.DAMAGE}
           isNewValue

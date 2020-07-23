@@ -3,13 +3,11 @@
 
 .player-tablet {
   margin-bottom: rem(40px);
-  padding-bottom: rem(60px);
+  padding-bottom: rem(20px);
   border-bottom: rem(3px) solid $color-gray-4;
   display: flex;
   display: grid;
   grid-template:
-    // 'info states' 50%
-    // 'info prepared' 50% / minmax(500px, 2fr) 3fr;
     'info states' auto
     'info prepared' auto / minmax(500px, 2fr) 3fr;
 
@@ -29,13 +27,14 @@
   }
 
   &__heading {
-    margin-bottom: rem(40px);
+    margin-bottom: rem(24px);
     margin-left: auto;
   }
 
   &__hero-image {
     object-fit: contain;
     object-position: top;
+    margin-bottom: rem(24px);
   }
 
   &__hero {
@@ -49,6 +48,26 @@
   &__role {
     display: inline-block;
     font-size: rem(28px);
+  }
+
+  &__checking {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  &__check-link {
+    @include transition;
+
+    &:hover,
+    &:focus {
+      transform: scale(1.15);
+    }
+  }
+  &__check-icon {
+    height: rem(40px);
   }
 
   &__inspiration-block {
@@ -100,5 +119,9 @@
     &--prepared {
       grid-area: prepared;
     }
+  }
+
+  &__group--offset-bottom {
+    margin-bottom: rem(30px);
   }
 }

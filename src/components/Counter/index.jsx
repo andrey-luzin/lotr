@@ -4,7 +4,7 @@ import './Counter.scss';
 
 const Counter = ({
   value,
-  maxValue
+  maxValue = Infinity
 }) => {
 
   const [count, setCount] = useState(value || 0);

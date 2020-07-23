@@ -1,0 +1,31 @@
+@import "../../assets/styles/variables";
+@import "../../assets/styles/mixins";
+
+.check-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100vh;
+  padding: rem(40px);
+  box-sizing: border-box;
+
+  &__list {
+    margin-bottom: rem(32px);
+  }
+
+  &__back-link {
+    margin-top: auto;
+    margin-right: auto;
+    @include transition;
+
+    &:hover,
+    &:focus {
+      transform: scale(1.15);
+    }
+  }
+
+  &__back-icon {
+    transform: scaleX(-1);
+    height: rem(40px);
+  }
+}

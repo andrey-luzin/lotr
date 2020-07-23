@@ -4,6 +4,7 @@ import Modal from 'components/Modal';
 
 import ButtonGroup from 'components/ButtonGroup';
 import Button from 'components/Button';
+import Counter from 'components/Counter';
 
 import CardType from 'constants/CardType';
 
@@ -58,19 +59,21 @@ const getOpenedType = (type, id, role, hero) => {
   }
 }
 
-const CardImage = ({source, onClick = null}) => (
+const CardImage = ({source, onClick = null, tokens = 0}) => (
   <img
-    className="card__wrapper"
+    className='card__wrapper'
     src={source}
     alt=""
     onClick={onClick}
+    
   />
 );
 
 /**
  * @property {string} type Тип карты, определяет обложку и действия, которые можно делать с картой.
- * @property {boolean} isOpened Открытая или закрытая карта
+ * @property {boolean} isOpened Открытая или закрытая карта.
  * @property {boolean} isNewValue Карта из планшета утилит, которая возметься в планшет игрока (всегда закрытая).
+ * @property {number} itemTokens Если у карты вещи есть токены, передается их количество.
  */
 const Card = ({
   type,
@@ -78,7 +81,8 @@ const Card = ({
   role = null,
   hero = null,
   isOpened = false,
-  isNewValue = false
+  isNewValue = false,
+  itemTokens = 0
 }) => {
   const [isModalOpen, setModalIsOpen] = useState(false);
 
@@ -87,12 +91,19 @@ const Card = ({
   };
   
   return (
-    <div className={`card ${!isOpened ? 'card--isClosed' : ''}`}>
+    <div
+      className={`card ${!isOpened ? 'card--isClosed' : ''} ${itemTokens ? 'card--isCounted' : ''}`}
+      data-tokens={itemTokens ? itemTokens : ''}
+    >
       {
         (isOpened && isModalOpen) &&
         <Modal onRequestClose={toggleModal}>
           <ButtonGroup>
             <Button text="Скинуть" />
+            {
+              itemTokens > 0 &&
+              <Counter value={itemTokens} />
+            }
           </ButtonGroup>
           <CardImage
             source={isOpened ? getOpenedType(type, id, role, hero) : getType(type)}

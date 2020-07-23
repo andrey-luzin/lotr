@@ -4,10 +4,11 @@ import './Button.scss';
 
 const Button = ({
   text = '',
-  modifier= ''
+  modifier = '',
+  className = ''
 }) => {
   return (
-    <button className={`button ${modifier ? 'button--' + modifier : ''}`}>
+    <button className={`button ${modifier ? 'button--' + modifier : ''} ${className ? className : ''}`}>
       <span className="button__inner">{text}</span>
     </button>
   )

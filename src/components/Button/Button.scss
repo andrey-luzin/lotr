@@ -23,10 +23,6 @@
     opacity: .8;
   }
 
-  & + & {
-    margin-top: rem(24px);
-  }
-
   &--inside {
     border: none;
     font-size: rem(14px);

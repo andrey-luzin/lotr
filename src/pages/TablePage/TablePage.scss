@@ -2,5 +2,17 @@
 @import "../../assets/styles/mixins";
 
 .table-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 
+  &__players-list {
+    padding: rem(40px);
+    overflow: auto;
+    flex-grow: 1;
+  }
+
+  &__utils {
+    flex-shrink: 0;
+  }
 }

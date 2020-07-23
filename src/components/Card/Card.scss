@@ -17,6 +17,28 @@
     cursor: default;
   }
 
+  &--isCounted {
+    @extend %before;
+    z-index: $z-modal;
+    
+    &:before {
+      background-color: $color-gray-2;
+      border-radius: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      left: rem(-6px);
+      bottom: rem(-6px);
+      width: rem(36px);
+      height: rem(36px);
+      font-size: rem(20px);
+      font-weight: 700;
+      border: 2px solid $color-gray-4;
+      box-sizing: border-box;
+      content: attr(data-tokens);
+    }
+  }
+
   &__wrapper {
     max-height: 100%;
   }

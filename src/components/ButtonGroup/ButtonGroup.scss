@@ -9,4 +9,8 @@
   & + * {
     margin-left: rem(56px);
   }
+
+  & > * + * {
+    margin-top: rem(24px);
+  }
 }

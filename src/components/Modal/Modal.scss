@@ -18,7 +18,7 @@
     top: rem(20px);
     cursor: pointer;
     padding: rem(10px);
-    background-image: url('./assets/imgs/close.svg');
+    background-image: url('../../assets/imgs/close.svg');
     @include icon-button;
     box-sizing: border-box;
   }
