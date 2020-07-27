@@ -2,9 +2,21 @@
 @import "assets/styles/_mixins";
 
 .counter {
+  $root: &;
+
   display: flex;
   justify-content: space-between;
   border: 1px solid $color-light;
+  background-color: rgba($color-dark, .25);
+  
+  &--inside {
+    background-color: rgba($color-dark, .7);
+
+    #{$root}__value {
+      font-size: rem(14px);
+
+    }
+  }
 
   &__changer {
     @extend %clear-button;
@@ -29,7 +41,7 @@
     &:hover,
     &:focus {
       &:not(:disabled):after {
-        transform: scale(1.5);
+        transform: scale(1.35);
       }
     }
 

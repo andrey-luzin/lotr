@@ -70,6 +70,7 @@ const PlayerTablet = ({
             title={CardName.DAMAGE}
             type={CardType.DAMAGE}
             list={damage}
+            modifier='player-tablet__group'
           />
         }
         {
@@ -78,6 +79,7 @@ const PlayerTablet = ({
             type={CardType.FEAR}
             title={CardName.FEAR}
             list={fear}
+            modifier='player-tablet__group'
           />
         }
       </div>
@@ -92,7 +94,7 @@ const PlayerTablet = ({
             role={roleId}
             hero={heroId}
             isPrepared={true}
-            modifier='player-tablet__group player-tablet__group--offset-bottom'
+            modifier='player-tablet__group'
           />
         }
         {
@@ -102,7 +104,7 @@ const PlayerTablet = ({
             type={CardType.ITEM}
             list={items}
             isOpened={true}
-            modifier='player-tablet__group player-tablet__group--offset-bottom'
+            modifier='player-tablet__group'
           />
         }
       </div>

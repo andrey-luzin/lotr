@@ -35,6 +35,7 @@ const Checking = ({
               role={roleId}
               hero={heroId}
               isOpened={true}
+              isChecking={true}
             />
           )
         }

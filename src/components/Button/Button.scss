@@ -15,7 +15,7 @@
 
   &:hover,
   &:focus {
-    transform: scale(1.1);
+    transform: scale(1.065);
   }
 
   &:focus,
@@ -27,6 +27,7 @@
     border: none;
     font-size: rem(14px);
     word-wrap: break-word;
+    word-break: break-word;
     white-space: normal;
     hyphens: auto;
     @extend %after;
@@ -36,7 +37,7 @@
       height: 1px;
       background-color: $color-light;
       left: 0;
-      bottom: rem(-12px);
+      bottom: rem(-8px);
     }
 
     &:hover,
@@ -44,7 +45,7 @@
       transform: none;
       
       #{$root}__inner {
-        transform: scale(1.25) translateZ(0);
+        transform: scale(1.2) translateZ(0);
       }
     }
   }

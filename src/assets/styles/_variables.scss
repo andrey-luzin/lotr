@@ -1,7 +1,9 @@
 $base-font-size: 16px;
 
 // Colours
-$color-burnt-umber: #882926;
+$color-burnt-sienna: #E77E4D;
+$color-sunset-orange: #F94E3F;
+$color-picton-blue: #47b8e0;
 
 $color-gray: #333333;
 $color-gray-2: #4f4f4f;
@@ -14,9 +16,9 @@ $color-light: #ffffff;
 $color-dark: #000000;
 
 $color-main: $color-light;
-$color-secondary: $color-burnt-umber;
-$color-warning: orange;
-$color-alert: red;
+$color-warning: $color-burnt-sienna;
+$color-alert: $color-sunset-orange;
+$color-succes: $color-picton-blue;
 
 // Media queries
 $media-mobile: 375px;

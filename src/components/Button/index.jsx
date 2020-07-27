@@ -5,10 +5,14 @@ import './Button.scss';
 const Button = ({
   text = '',
   modifier = '',
-  className = ''
+  className = '',
+  onClick = () => null
 }) => {
   return (
-    <button className={`button ${modifier ? 'button--' + modifier : ''} ${className ? className : ''}`}>
+    <button
+      className={`button ${modifier ? 'button--' + modifier : ''} ${className ? className : ''}`}
+      onClick={onClick}
+    >
       <span className="button__inner">{text}</span>
     </button>
   )
