@@ -13,29 +13,22 @@ const Bilbo = {
   inspiration: 6,
   maxInspiration: 6,
   damage: [
-   {
-     type: 'opened',
-     cards: [1]
-   },
-   {
-     type: 'closed',
-     cards: [2, 3]
-   }
+    {id: 1, type: 'opened'},
+    {id: 3, type: 'closed'},
+    {id: 4, type: 'closed'},
+    {id: 5, type: 'closed'}
   ],
-  fear: [1],
+  fear: [
+    {id: 3, type: 'closed'}
+  ],
   prepared: [
-    {
-      type: 'base',
-      cards: [1,2]
-    },
-    {
-      type: 'hero',
-      cards: [2,3]
-    },
-    {
-      type: 'role',
-      cards: [1,2,3]
-    }
+    {id: 1, type: 'base'},
+    {id: 2, type: 'base'},
+    {id: 2, type: 'hero'},
+    {id: 3, type: 'hero'},
+    {id: 4, type: 'role'},
+    {id: 5, type: 'role'},
+    {id: 5, type: 'role'}
   ],
   items: [
     {id: 1},
@@ -50,15 +43,18 @@ const Legolas = {
   role: "Охотник",
   inspiration: 2,
   maxInspiration: 6,
-  damage: [1],
-  fear: [1],
-  prepared: [
-    {
-      type: 'role',
-      cards: [1]
-    },
+  damage: [
+    {id: 1, type: 'opened'}
   ],
-  items: [{id: 1}]
+  fear: [
+    {id: 2, type: 'closed'}
+  ],
+  prepared: [
+    {id: 1, type: 'base'}
+  ],
+  items: [
+    {id: 1}
+  ]
 };
 
 const TablePage = () => {

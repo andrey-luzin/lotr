@@ -17,6 +17,7 @@ const CardGroup = ({
   hero = null,
   modifier = ''
 }) => {
+
   return (
     <div className={`card-group ${title ? 'h-label-parent' : ''} ${modifier ? modifier : ''}`}>
       {
@@ -24,51 +25,30 @@ const CardGroup = ({
         <span className="h-hidden-label">{title}</span>
       }
       {
-        type === CardType.ITEM ?
         list.map((listItem, index) => 
           <Card
             id={+listItem.id}
             key={`${index}_${listItem.id}`}
-            type={type}
+            type={
+              `${type}${listItem.type && listItem.type !== CardType.CLOSED ? `-${listItem.type}` : ''}`
+            }
             role={role}
             hero={hero}
-            isOpened={isOpened}
-            itemTokens={+listItem.tokens}
-          />
-        )
-        :
-        // If contains objects
-        list.some(group => typeof group === 'object') ?
-        (
-          list
-          .map(group => group.cards.map((listItem, index) => 
-              <Card
-                id={+listItem}
-                key={`${index}_${listItem}`}
-                // If not opened, then add group type
-                type={
-                  `${type}${group.type === CardType.CLOSED ? '' : `-${group.type}`}`
-                }
-                role={role}
-                hero={hero}
-                isOpened={(isPrepared || group.type === CardType.OPENED) ? true : false}
-              />
-          ))
-        ) : 
-        list.map((listItem, index) => 
-          <Card
-            id={+listItem}
-            key={`${index}_${listItem}`}
-            type={type}
-            role={role}
-            hero={hero}
-            isOpened={isOpened}
-            isNewValue={isNewValue}
+            isOpened={
+              isOpened || isPrepared || listItem.type === CardType.OPENED 
+                ? true
+                : false
+            }
+            itemTokens={
+              type === CardType.ITEM && listItem.tokens
+              ? +listItem.tokens
+              : 0
+            }
           />
         )
       }
     </div>
-  )
+  );
 };
 
 export default CardGroup;

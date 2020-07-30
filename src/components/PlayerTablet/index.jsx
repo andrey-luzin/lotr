@@ -21,10 +21,10 @@ const PlayerTablet = ({
   role,
   inspiration,
   maxInspiration,
-  damage,
-  fear,
-  prepared,
-  items
+  damage = [],
+  fear = [],
+  prepared = [],
+  items = []
 }) => {
   return (
     <div className="player-tablet">
