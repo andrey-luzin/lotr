@@ -1,0 +1,30 @@
+@import "../../assets/styles/variables";
+@import "../../assets/styles/mixins";
+
+.select {
+  margin-bottom: rem(20px);
+  @extend %before;
+
+  &:before {
+    width: 0;
+    height: 0;
+    border-left: rem(6px) solid transparent;
+    border-right: rem(6px) solid transparent;
+    border-top: rem(6px) solid $color-light;
+    right: rem(14px);
+    top: 0;
+    bottom: 0;
+    margin: auto;
+  }
+
+  &__element {
+    appearance: none;
+    padding: rem(4px);
+    color: $color-light;
+    background-color: rgba($color-dark, .7);
+    border: 1px solid $color-light;
+    padding: rem(8px 30px 11px 12px);
+    font-size: rem(20px);
+    border-radius: 0;
+  }
+}
