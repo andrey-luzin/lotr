@@ -10,5 +10,11 @@
 
   &__go {
     font-size: rem(40px);
+
+    &--isDisable {
+      color: currentColor;
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
   }
 }

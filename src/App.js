@@ -1,20 +1,41 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import StartPage from './pages/StartPage';
-import TablePage from './pages/TablePage';
-import CheckPage from './pages/CheckPage';
+
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import firebaseConfig from 'firebaseConfig';
+import {
+  FirebaseAuthProvider,
+  FirebaseAuthConsumer,
+  IfFirebaseAuthed,
+  IfFirebaseUnAuthed,
+} from "@react-firebase/auth";
+
+import { StateProvider } from 'store/store.js';
+import StartPage from 'pages/StartPage';
+import TablePage from 'pages/TablePage';
+import CheckPage from 'pages/CheckPage';
 
 import './assets/styles/_general.scss';
 
 const App = () => {
+  firebase.initializeApp(firebaseConfig);
+
   return (
-    <Router>
-      <Switch>
-        <Route path="/" exact component={StartPage} />
-        <Route path="/table" component={TablePage} />
-        <Route path="/check" component={CheckPage} />
-      </Switch>
-    </Router>
+    <FirebaseAuthProvider {...firebaseConfig} firebase={firebase}>
+      <StateProvider>
+        <Router>
+          <Switch>
+            <Route path="/" exact component={StartPage} />
+            <Route path="/table" component={TablePage} />
+            <Route path="/check" component={CheckPage} />
+          </Switch>
+          {/* <IfFirebaseUnAuthed>
+            {() => <Redirect to="/"/>}
+          </IfFirebaseUnAuthed> */}
+        </Router>
+      </StateProvider>
+    </FirebaseAuthProvider>
   );
 }
 

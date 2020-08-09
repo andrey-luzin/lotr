@@ -1,5 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
+import {
+  IfFirebaseAuthed
+} from "@react-firebase/auth";
+
+import { store } from 'store/store.js';
 
 import CardGroup from 'components/CardGroup';
 import Counter from 'components/Counter';
@@ -26,10 +35,26 @@ const PlayerTablet = ({
   prepared = [],
   items = []
 }) => {
+  const globalState = useContext(store);
+  const { state } = globalState;
+
+  console.log(state);
+
   return (
     <div className="player-tablet">
       <div className="player-tablet__info">
         <header className="player-tablet__heading">
+          <IfFirebaseAuthed>
+            {() =>
+              <Link to="/" onClick={() => firebase.auth().signOut()}>
+                <Button
+                  text="Выйти"
+                  className="player-tablet__out"
+                  onClick={() => firebase.auth().signOut()}
+                />
+              </Link>
+            }
+          </IfFirebaseAuthed>
           <h2 className="player-tablet__hero">{hero}</h2>
           <span className="player-tablet__role">{role}</span>
         </header>

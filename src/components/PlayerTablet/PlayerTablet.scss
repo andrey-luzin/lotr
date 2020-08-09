@@ -28,7 +28,8 @@
 
   &__heading {
     margin-bottom: rem(24px);
-    margin-left: auto;
+    display: flex;
+    align-items: baseline;
   }
 
   &__hero-image {
@@ -37,8 +38,12 @@
     margin-bottom: rem(24px);
   }
 
+  &__out {
+    align-self: center;
+  }
+
   &__hero {
-    margin: 0;
+    margin: 0 rem(32px) 0 auto;
     display: inline-block;
     margin-right: rem(32px);
     font-size: rem(40px);
