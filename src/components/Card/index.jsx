@@ -81,7 +81,8 @@ const Card = ({
   isOpened = false,
   isNewValue = false,
   isChecking = false,
-  itemTokens = 0
+  itemTokens = 0,
+  isActive = false
 }) => {
   const [isModalOpen, setModalIsOpen] = useState(false);
 
@@ -91,94 +92,106 @@ const Card = ({
   
   return (
     <div
-      className={`card ${!isOpened ? 'card--isClosed' : ''} ${itemTokens ? 'card--isCounted' : ''}`}
+      className={`
+        card ${!isOpened ? 'card--isClosed' : ''} ${itemTokens ? 'card--isCounted' : ''} ${isActive ? 'card--isActive' : ''}
+      `}
       data-tokens={itemTokens ? itemTokens : ''}
+      onClick={!isActive ? toggleModal : null}
     >
       {
         (isOpened && isModalOpen) &&
         <Modal onRequestClose={toggleModal}>
-          <ButtonGroup>
-            {
-              itemTokens > 0 &&
-              <Counter value={itemTokens} />
-            }
-            {
-              !isChecking ?
-              <Button text="Скинуть" /> :
-              <>
-                <Button text="Подготовить" />
-                <Button text="Наверх"/>
-                <Button text="Вниз" />
-              </>
-            }
-          </ButtonGroup>
+          {
+            isActive &&
+            <ButtonGroup>
+              {
+                itemTokens > 0 &&
+                <Counter value={itemTokens} />
+              }
+              {
+                !isChecking ?
+                <Button text="Скинуть" /> :
+                <>
+                  <Button text="Подготовить" />
+                  <Button text="Наверх"/>
+                  <Button text="Вниз" />
+                </>
+              }
+            </ButtonGroup>
+          }
           <CardImage
             source={isOpened ? getOpenedType(type, id, role, hero) : getType(type)}
           />
         </Modal>
       }
       {
-        !isNewValue &&
-        <div className="card__inside">
-          <ButtonGroup>
-            {
-              !isOpened &&
-              <>
+        isActive &&
+        <>
+          {
+            !isNewValue &&
+            <div className="card__inside">
+              <ButtonGroup>
+                {
+                  !isOpened &&
+                  <>
+                    {
+                      (type === CardType.DAMAGE || type === CardType.FEAR) &&
+                      <Counter value={2} modifier="inside" />
+                    }
+                    <Button text="Перевернуть" modifier="inside" />
+                  </>
+                }
+                {
+                  itemTokens > 0 &&
+                  <Counter value={itemTokens} modifier="inside" maxValue={2} />
+                }
+                {
+                  !isChecking ?
+                  <Button text="Скинуть" modifier="inside" /> :
+                  <>
+                    <Button text="Подготовить" modifier="inside" />
+                    <Button text="Наверх" modifier="inside" />
+                    <Button text="Вниз" modifier="inside" />
+                  </>
+                }
+                {
+                  isOpened &&
+                  <Button
+                    text="Увеличить"
+                    modifier="inside"
+                    onClick={toggleModal}
+                  />
+                }
+              </ButtonGroup>
+            </div>
+          }
+          { 
+            (isNewValue && !isOpened) &&
+            <div className="card__inside">
+              <ButtonGroup>
                 {
                   (type === CardType.DAMAGE || type === CardType.FEAR) &&
-                  <Counter value={2} modifier="inside" />
+                  <>
+                    <Button text="Закрытый" modifier="inside" />
+                    <Button text="Открытый" modifier="inside" />
+                  </>
                 }
-                <Button text="Перевернуть" modifier="inside" />
-              </>
-            }
-            {
-              itemTokens > 0 &&
-              <Counter value={itemTokens} modifier="inside" maxValue={2} />
-            }
-            {
-              !isChecking ?
-              <Button text="Скинуть" modifier="inside" /> :
-              <>
-                <Button text="Подготовить" modifier="inside" />
-                <Button text="Наверх" modifier="inside" />
-                <Button text="Вниз" modifier="inside" />
-              </>
-            }
-            {
-              isOpened &&
-              <Button
-                text="Увеличить"
-                modifier="inside"
-                onClick={toggleModal}
-              />
-            }
-          </ButtonGroup>
-        </div>
-      }
-      { 
-        (isNewValue && !isOpened) &&
-        <div className="card__inside">
-          <ButtonGroup>
-            {
-              (type === CardType.DAMAGE || type === CardType.FEAR) &&
-              <>
-                <Button text="Закрытый" modifier="inside" />
-                <Button text="Открытый" modifier="inside" />
-              </>
-            }
-            {
-              type === CardType.INTELLIGANCE &&
-              <Button text="Провести разведку" modifier="inside" />
-            }
-            {
-              (type === CardType.ADVANTAGE || type === CardType.WEAKNESS) &&
-              <Button text="Взять" modifier="inside" />
-            }
-          </ButtonGroup>
-        </div>
+                {
+                  type === CardType.INTELLIGANCE &&
+                  <Button text="Провести разведку" modifier="inside" />
+                }
+                {
+                  (type === CardType.ADVANTAGE || type === CardType.WEAKNESS) &&
+                  <Button text="Взять" modifier="inside" />
+                }
+              </ButtonGroup>
+            </div>
+          }
+        </>
       }
       <CardImage
         source={isOpened ? getOpenedType(type, id, role, hero) : getType(type)}
+        
       />
     </div>
   )

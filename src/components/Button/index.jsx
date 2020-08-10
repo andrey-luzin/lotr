@@ -7,12 +7,14 @@ const Button = ({
   text = '',
   modifier = '',
   className = '',
-  onClick = () => null
+  onClick = () => null,
+  isActive = true
 }) => {
   return (
     <button
       className={`button ${modifier ? 'button--' + modifier : ''} ${className ? className : ''}`}
       onClick={onClick}
+      disabled={!isActive}
     >
       <span className="button__inner">{text}</span>
     </button>

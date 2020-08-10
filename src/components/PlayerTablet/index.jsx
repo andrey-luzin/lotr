@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import firebase from 'firebase/app';
@@ -9,6 +9,7 @@ import {
 } from "@react-firebase/auth";
 
 import { store } from 'store/store.js';
+import context from 'constants/Context';
 
 import CardGroup from 'components/CardGroup';
 import Counter from 'components/Counter';
@@ -22,6 +23,7 @@ import { ReactComponent as Arrow } from 'assets/imgs/arrow.svg';
 import inspirationImage from 'assets/imgs/inspiration.jpeg';
 
 import './PlayerTablet.scss';
+import { useState } from 'react';
 
 const PlayerTablet = ({
   roleId,
@@ -36,25 +38,44 @@ const PlayerTablet = ({
   items = []
 }) => {
   const globalState = useContext(store);
-  const { state } = globalState;
+  const { state, dispatch } = globalState;
+  const localPlayer  = localStorage.getItem(context.hero);
+  const [isSigned, setIsSigned] = useState(false);
 
-  console.log(state);
+  // TODO: интерпретировать, перенести как HOC
+  useEffect(() => {
+    if (heroId === localPlayer) {
+      setIsSigned(true);
+    }
+  }, [localPlayer])
+
+  const handleOut = () => {
+    firebase.auth().signOut().then(() => {
+      localStorage.removeItem(context.hero);
+    });
+  }
 
   return (
     <div className="player-tablet">
       <div className="player-tablet__info">
         <header className="player-tablet__heading">
-          <IfFirebaseAuthed>
-            {() =>
-              <Link to="/" onClick={() => firebase.auth().signOut()}>
-                <Button
-                  text="Выйти"
+          {
+            isSigned &&
+            <IfFirebaseAuthed>
+              {() =>
+                <Link
                   className="player-tablet__out"
-                  onClick={() => firebase.auth().signOut()}
-                />
-              </Link>
-            }
-          </IfFirebaseAuthed>
+                  to="/"
+                  onClick={handleOut}
+                >
+                  <Button
+                    text="Выйти"
+                    className="player-tablet__out"
+                  />
+                </Link>
+              }
+            </IfFirebaseAuthed>
+          }
           <h2 className="player-tablet__hero">{hero}</h2>
           <span className="player-tablet__role">{role}</span>
         </header>
@@ -63,14 +84,17 @@ const PlayerTablet = ({
           alt={heroId}
           className="player-tablet__hero-image"
         />
-        <div className="player-tablet__checking">
-          <Counter value={0} />
-          <Button text="Разведка" />
-          <Button text="Проверка" />
-          <Link to="check" className="player-tablet__check-link">
-            <Arrow className="player-tablet__check-icon" />
-          </Link>
-        </div>
+        {
+          isSigned &&
+          <div className="player-tablet__checking">
+            <Counter value={0} />
+            <Button text="Разведка" isActive={isSigned} />
+            <Button text="Проверка" isActive={isSigned} />
+            <Link to="check" className="player-tablet__check-link">
+              <Arrow className="player-tablet__check-icon" />
+            </Link>
+          </div>
+        }
       </div>
       <div className="player-tablet__row player-tablet__row--states">
         <div className="player-tablet__inspiration-block h-label-parent">
@@ -87,7 +111,10 @@ const PlayerTablet = ({
               ))
             }
           </div>
-          <Counter value={inspiration} maxValue={maxInspiration} />
+          {
+            isSigned &&
+            <Counter value={inspiration} maxValue={maxInspiration}  />
+          }
         </div>
         {
           damage.length &&
@@ -96,6 +123,7 @@ const PlayerTablet = ({
             type={CardType.DAMAGE}
             list={damage}
             modifier='player-tablet__group'
+            isActive={isSigned}
           />
         }
         {
@@ -105,6 +133,7 @@ const PlayerTablet = ({
             title={CardName.FEAR}
             list={fear}
             modifier='player-tablet__group'
+            isActive={isSigned}
           />
         }
       </div>
@@ -120,6 +149,7 @@ const PlayerTablet = ({
             hero={heroId}
             isPrepared={true}
             modifier='player-tablet__group'
+            isActive={isSigned}
           />
         }
         {
@@ -130,6 +160,7 @@ const PlayerTablet = ({
             list={items}
             isOpened={true}
             modifier='player-tablet__group'
+            isActive={isSigned}
           />
         }
       </div>

@@ -83,3 +83,8 @@
     z-index: 3;
   }
 }
+
+@mixin disabled($cursor: 'not-allowed') {
+  cursor: $cursor;
+  opacity: .6;
+}

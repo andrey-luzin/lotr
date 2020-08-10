@@ -15,9 +15,9 @@ const CardGroup = ({
   list = [1] || [{}],
   role = null,
   hero = null,
-  modifier = ''
+  modifier = '',
+  isActive = false
 }) => {
-
   return (
     <div className={`card-group ${title ? 'h-label-parent' : ''} ${modifier ? modifier : ''}`}>
       {
@@ -44,6 +44,7 @@ const CardGroup = ({
               ? +listItem.tokens
               : 0
             }
+            isActive={isActive}
           />
         )
       }

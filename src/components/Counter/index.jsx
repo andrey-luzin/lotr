@@ -5,7 +5,7 @@ import './Counter.scss';
 const Counter = ({
   value,
   maxValue = Infinity,
-  modifier = '',
+  modifier = ''
 }) => {
 
   const [count, setCount] = useState(value || 0);
@@ -23,7 +23,9 @@ const Counter = ({
   }, [count, maxValue]);
 
   return (
-    <div className={`counter ${modifier ? 'counter--' + modifier : ''}`}>
+    <div className={`
+      counter ${modifier ? 'counter--' + modifier : ''}
+    `}>
       <button
         className="counter__changer counter__changer--minus"
         disabled={count === 0}

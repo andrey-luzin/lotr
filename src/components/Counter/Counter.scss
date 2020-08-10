@@ -27,21 +27,22 @@
     cursor: pointer;
     @extend %after;
 
-    &:disabled {
-      color: rgba($color-light, .5);
-      cursor: default;
-    }
-
     &:after {
       @include transition;
       font-size: rem(28px);
       line-height: 12px;
     }
 
-    &:hover,
-    &:focus {
-      &:not(:disabled):after {
-        transform: scale(1.35);
+    &:disabled {
+      @include disabled(default);
+    }
+
+    &:not(:disabled) {
+      &:hover,
+      &:focus {
+        &:not(:disabled):after {
+          transform: scale(1.35);
+        }
       }
     }
 
