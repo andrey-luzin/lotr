@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import firebase from 'firebase/app';
@@ -8,8 +8,6 @@ import {
   IfFirebaseAuthed
 } from "@react-firebase/auth";
 
-import { store } from 'store/store.js';
-import context from 'constants/Context';
 
 import CardGroup from 'components/CardGroup';
 import Counter from 'components/Counter';
@@ -17,13 +15,14 @@ import Button from 'components/Button';
 
 import CardType from 'constants/CardType';
 import CardName from 'constants/CardName';
+import context from 'constants/Context';
+import usePlayer from 'hooks/usePlayer';
 
 import { ReactComponent as Arrow } from 'assets/imgs/arrow.svg';
-
 import inspirationImage from 'assets/imgs/inspiration.jpeg';
 
 import './PlayerTablet.scss';
-import { useState } from 'react';
+
 
 const PlayerTablet = ({
   roleId,
@@ -36,18 +35,8 @@ const PlayerTablet = ({
   fear = [],
   prepared = [],
   items = []
-}) => {
-  const globalState = useContext(store);
-  const { state, dispatch } = globalState;
-  const localPlayer  = localStorage.getItem(context.hero);
-  const [isSigned, setIsSigned] = useState(false);
-
-  // TODO: интерпретировать, перенести как HOC
-  useEffect(() => {
-    if (heroId === localPlayer) {
-      setIsSigned(true);
-    }
-  }, [localPlayer])
+}) => { 
+  const isPlayer = usePlayer(heroId);
 
   const handleOut = () => {
     firebase.auth().signOut().then(() => {
@@ -60,7 +49,7 @@ const PlayerTablet = ({
       <div className="player-tablet__info">
         <header className="player-tablet__heading">
           {
-            isSigned &&
+            isPlayer &&
             <IfFirebaseAuthed>
               {() =>
                 <Link
@@ -85,11 +74,11 @@ const PlayerTablet = ({
           className="player-tablet__hero-image"
         />
         {
-          isSigned &&
+          isPlayer &&
           <div className="player-tablet__checking">
             <Counter value={0} />
-            <Button text="Разведка" isActive={isSigned} />
-            <Button text="Проверка" isActive={isSigned} />
+            <Button text="Разведка" isActive={isPlayer} />
+            <Button text="Проверка" isActive={isPlayer} />
             <Link to="check" className="player-tablet__check-link">
               <Arrow className="player-tablet__check-icon" />
             </Link>
@@ -112,7 +101,7 @@ const PlayerTablet = ({
             }
           </div>
           {
-            isSigned &&
+            isPlayer &&
             <Counter value={inspiration} maxValue={maxInspiration}  />
           }
         </div>
@@ -123,7 +112,7 @@ const PlayerTablet = ({
             type={CardType.DAMAGE}
             list={damage}
             modifier='player-tablet__group'
-            isActive={isSigned}
+            isActive={isPlayer}
           />
         }
         {
@@ -133,7 +122,7 @@ const PlayerTablet = ({
             title={CardName.FEAR}
             list={fear}
             modifier='player-tablet__group'
-            isActive={isSigned}
+            isActive={isPlayer}
           />
         }
       </div>
@@ -149,7 +138,7 @@ const PlayerTablet = ({
             hero={heroId}
             isPrepared={true}
             modifier='player-tablet__group'
-            isActive={isSigned}
+            isActive={isPlayer}
           />
         }
         {
@@ -160,7 +149,7 @@ const PlayerTablet = ({
             list={items}
             isOpened={true}
             modifier='player-tablet__group'
-            isActive={isSigned}
+            isActive={isPlayer}
           />
         }
       </div>
