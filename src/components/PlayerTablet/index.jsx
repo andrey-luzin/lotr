@@ -69,7 +69,7 @@ const PlayerTablet = ({
           <span className="player-tablet__role">{role}</span>
         </header>
         <img
-          src={`assets/cards/tablets/${heroId}.jpeg`}
+          src={`assets/tablets/${heroId}.jpeg`}
           alt={heroId}
           className="player-tablet__hero-image"
         />

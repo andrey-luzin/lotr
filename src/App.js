@@ -16,7 +16,7 @@ import CheckPage from 'pages/CheckPage';
 import './assets/styles/_general.scss';
 
 const App = () => {
-  firebase.initializeApp(firebaseConfig);
+  // firebase.initializeApp(firebaseConfig);
 
   return (
     <FirebaseAuthProvider {...firebaseConfig} firebase={firebase}>

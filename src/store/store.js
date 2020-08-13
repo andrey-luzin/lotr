@@ -10,12 +10,8 @@ const StateProvider = ( { children } ) => {
     switch(action.type) {
       case 'setPlayer':
         if (action.payload !== localStorage.getItem(context.hero)) {
-          console.log(1);
           localStorage.setItem(context.hero, action.payload);
-        } else {
-          console.log(2);
         }
-        // localStorage.setItem(context.hero, action.payload);
         return {...state, hero: action.payload};
       default:
         throw new Error();

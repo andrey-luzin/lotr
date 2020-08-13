@@ -2,23 +2,9 @@ import React from 'react';
 
 import './Select.scss';
 
-const persons = [
-  {
-    roleId: 'burglar',
-    heroId: 'bilbo',
-    hero: "Бильбо",
-    role: "Взломщик",
-  },
-  {
-    roleId: 'hunter',
-    heroId: 'legolas',
-    hero: "Леголас",
-    role: "Охотник",
-  }
-];
-
 const Select = ({
   onChange = (_e) => null,
+  heroesList = [],
   value = ""
 }) => {
   /**
@@ -37,7 +23,7 @@ const Select = ({
       >
         <option value="" disabled hidden>Выбери героя</option>
         {
-          persons.map((person, index) => 
+          heroesList.map((person, index) => 
             <option
               className="select__option"
               value={person.heroId}

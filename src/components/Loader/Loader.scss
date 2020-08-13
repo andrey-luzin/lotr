@@ -1,0 +1,24 @@
+.loader {
+  width: 150px;
+  height: 150px;
+  background-image: url('../../assets/imgs/loader.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  animation: rotate 8s linear infinite;
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
