@@ -1,26 +1,38 @@
 import { useState, useEffect } from 'react';
 import firebase from 'firebase/app';
 
-const useHeroes = () => {
-  const [heroesList, setHeroesList] = useState({loading: false, array: []});
+import { HeroesCollection } from 'constants/FirebaseConst';
+
+const useCollection = () => {
+  const [heroesList, setHeroesList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const db = firebase.firestore();
 
   useEffect(() => {
-    setHeroesList({loading: true, array: []});
-    db.collection("heroes").get()
-      .then((querySnapshot) => {
+    setLoading(true);
+    db.collection(HeroesCollection).onSnapshot(querySnapshot => {
         const list = [];
         querySnapshot.forEach((doc) => {
-          list.push(doc.data());
+          list.push(
+            Object.assign(
+              {id: doc.id},
+              doc.data()
+            )
+          );
         });
-        setHeroesList({loading: false, array: list});
-      }).catch((error) => {
+        setHeroesList(list);
+        setLoading(false);
+      }, error => {
         console.log(`Error from response: ${error}`);
-      })
+        setLoading(false);
+      });
   }, [db]);
 
-  return heroesList;
+  return {
+    heroesList,
+    loading
+  };
 };
 
-export default useHeroes;
+export default useCollection;

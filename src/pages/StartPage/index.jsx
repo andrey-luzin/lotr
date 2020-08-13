@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import firebase from 'firebase/app';
@@ -13,16 +13,16 @@ import { store } from 'store/store.js';
 import Select from 'components/Select';
 import context from 'constants/Context';
 
-import useHeroes from 'hooks/useHeroes';
+import useCollection from 'hooks/useHeroes';
 
 import './StartPage.scss';
 
 const StartPage = () => {
-  const heroesList = useHeroes();
+  const { heroesList, loading } = useCollection();
   const globalState = useContext(store);
   const { dispatch } = globalState;
   const localPlayer  = localStorage.getItem(context.hero);
-  const [heroId, setheroId] = React.useState("");
+  const [heroId, setheroId] = useState("");
 
   const handleOnChange = (newValue = '') => {
     setheroId(newValue);
@@ -49,13 +49,13 @@ const StartPage = () => {
   return (
       <div className="start-page">
         {
-          heroesList.loading ? <Loader/> :
+          loading ? <Loader/> :
           <>
             <Select
               value={heroId}
               onChange={handleOnChange}
               heroesList={
-                heroesList.array.map(hero => {
+                heroesList.map(hero => {
                   return({
                     heroId: hero.heroId,
                     hero: hero.hero

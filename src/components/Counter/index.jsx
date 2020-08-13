@@ -5,22 +5,24 @@ import './Counter.scss';
 const Counter = ({
   value,
   maxValue = Infinity,
-  modifier = ''
+  modifier = '',
+  onChange = (e = 0) => null
 }) => {
-
   const [count, setCount] = useState(value || 0);
 
   const handleChangeMinus = useCallback(() => {
     if (count > 0) {
-      setCount(count - 1)
+      setCount(count - 1);
+      onChange(count - 1);
     }
-  }, [count]);
+  }, [count, onChange]);
 
   const handleChangePlus = useCallback(() => {
     if (count < maxValue) {
-      setCount(count + 1)
+      setCount(count + 1);
+      onChange(count + 1);
     }
-  }, [count, maxValue]);
+  }, [count, maxValue, onChange]);
 
   return (
     <div className={`

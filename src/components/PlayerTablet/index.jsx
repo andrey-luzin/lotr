@@ -8,7 +8,6 @@ import {
   IfFirebaseAuthed
 } from "@react-firebase/auth";
 
-
 import CardGroup from 'components/CardGroup';
 import Counter from 'components/Counter';
 import Button from 'components/Button';
@@ -16,6 +15,7 @@ import Button from 'components/Button';
 import CardType from 'constants/CardType';
 import CardName from 'constants/CardName';
 import context from 'constants/Context';
+import { HeroesCollection } from 'constants/FirebaseConst';
 import usePlayer from 'hooks/usePlayer';
 
 import { ReactComponent as Arrow } from 'assets/imgs/arrow.svg';
@@ -23,8 +23,8 @@ import inspirationImage from 'assets/imgs/inspiration.jpeg';
 
 import './PlayerTablet.scss';
 
-
 const PlayerTablet = ({
+  id,
   roleId,
   heroId,
   hero,
@@ -37,11 +37,18 @@ const PlayerTablet = ({
   items = []
 }) => { 
   const isPlayer = usePlayer(heroId);
+  const db = firebase.firestore();
 
   const handleOut = () => {
     firebase.auth().signOut().then(() => {
       localStorage.removeItem(context.hero);
     });
+  }
+
+  const handleInspirationChange = (number) => {
+    db.collection(HeroesCollection).doc(id).set({
+      inspiration: number
+    }, { merge: true })
   }
 
   return (
@@ -102,11 +109,15 @@ const PlayerTablet = ({
           </div>
           {
             isPlayer &&
-            <Counter value={inspiration} maxValue={maxInspiration}  />
+            <Counter
+              value={inspiration}
+              maxValue={maxInspiration}
+              onChange={number => handleInspirationChange(number)}
+            />
           }
         </div>
         {
-          damage.length &&
+          damage &&
           <CardGroup
             title={CardName.DAMAGE}
             type={CardType.DAMAGE}
@@ -116,7 +127,7 @@ const PlayerTablet = ({
           />
         }
         {
-          fear.length &&
+          fear &&
           <CardGroup
             type={CardType.FEAR}
             title={CardName.FEAR}
@@ -128,7 +139,7 @@ const PlayerTablet = ({
       </div>
       <div className="player-tablet__row player-tablet__row--prepared">
         {
-          prepared.length &&
+          prepared &&
           <CardGroup
             title={CardName.PREPARED}
             type={CardType.PREPARED}
@@ -142,7 +153,7 @@ const PlayerTablet = ({
           />
         }
         {
-          items.length &&
+          items &&
           <CardGroup 
             title={CardName.ITEM}
             type={CardType.ITEM}

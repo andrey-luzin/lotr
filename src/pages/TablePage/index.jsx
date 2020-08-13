@@ -6,21 +6,21 @@ import PlayerTablet from 'components/PlayerTablet';
 import UtilityTablet from 'components/UtilityTablet';
 import Loader from 'components/Loader';
 
-import useHeroes from 'hooks/useHeroes';
+import useCollection from 'hooks/useHeroes';
 
 import './TablePage.scss';
 
 const TablePage = () => {
-  const heroesList = useHeroes();
+  const { heroesList, loading } = useCollection();
 
   return (
     <div className="table-page">
       <div className="table-page__players-list">
         {
-          heroesList.loading && <Loader/>
+          loading && <Loader/>
         }
         {
-          heroesList.array.map((hero, index) => <PlayerTablet {...hero} key={index} />)
+          heroesList.map((hero, index) => <PlayerTablet {...hero} key={index} />)
         }
       </div>
       <UtilityTablet className="table-page__utils" />
