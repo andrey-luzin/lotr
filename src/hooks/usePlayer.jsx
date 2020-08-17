@@ -10,7 +10,7 @@ const usePlayer = (id) => {
 
   const globalState = useContext(store);
   const { state } = globalState;
-  const player = state.hero || localStorage.getItem(context.hero);
+  const player = state.heroId || localStorage.getItem(context.heroId);
   useEffect(() => {
     if (id === player) {
       setIsSigned(true);

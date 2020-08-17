@@ -13,16 +13,24 @@ import { store } from 'store/store.js';
 import Select from 'components/Select';
 import context from 'constants/Context';
 
-import useCollection from 'hooks/useHeroes';
+import useHeroesCollection from 'hooks/useHeroesCollection';
+import useHero from 'hooks/useHero';
 
 import './StartPage.scss';
 
 const StartPage = () => {
-  const { heroesList, loading } = useCollection();
+  // const hero = useHero();
+  const { heroesList, loading } = useHeroesCollection();
   const globalState = useContext(store);
   const { dispatch } = globalState;
-  const localPlayer  = localStorage.getItem(context.hero);
-  const [heroId, setheroId] = useState("");
+  const localPlayer  = localStorage.getItem(context.heroId);
+  const [heroId, setheroId] = useState('');
+
+  // useEffect(() => {
+  //   if(hero) {
+  //     setheroId(hero)
+  //   }
+  // }, [hero]);
 
   const handleOnChange = (newValue = '') => {
     setheroId(newValue);
@@ -38,7 +46,7 @@ const StartPage = () => {
     if (localPlayer) {
       setheroId(localPlayer);
     } else {
-      setheroId('')
+      setheroId('');
     }
   }, [localPlayer]);
 
@@ -54,7 +62,7 @@ const StartPage = () => {
             <Select
               value={heroId}
               onChange={handleOnChange}
-              heroesList={
+              list={
                 heroesList.map(hero => {
                   return({
                     heroId: hero.heroId,

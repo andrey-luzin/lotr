@@ -31,17 +31,18 @@ const PlayerTablet = ({
   role,
   inspiration,
   maxInspiration,
-  damage = [],
-  fear = [],
-  prepared = [],
-  items = []
+  damage,
+  fear,
+  prepared,
+  items
 }) => { 
   const isPlayer = usePlayer(heroId);
+
   const db = firebase.firestore();
 
   const handleOut = () => {
     firebase.auth().signOut().then(() => {
-      localStorage.removeItem(context.hero);
+      localStorage.removeItem(context.heroId);
     });
   }
 
@@ -137,33 +138,36 @@ const PlayerTablet = ({
           />
         }
       </div>
-      <div className="player-tablet__row player-tablet__row--prepared">
-        {
-          prepared &&
-          <CardGroup
-            title={CardName.PREPARED}
-            type={CardType.PREPARED}
-            list={prepared}
-            isOpened={true}
-            role={roleId}
-            hero={heroId}
-            isPrepared={true}
-            modifier='player-tablet__group'
-            isActive={isPlayer}
-          />
-        }
-        {
-          items &&
-          <CardGroup 
-            title={CardName.ITEM}
-            type={CardType.ITEM}
-            list={items}
-            isOpened={true}
-            modifier='player-tablet__group'
-            isActive={isPlayer}
-          />
-        }
-      </div>
+      {
+        (prepared || items) &&
+        <div className="player-tablet__row player-tablet__row--prepared">
+          {
+            prepared &&
+            <CardGroup
+              title={CardName.PREPARED}
+              type={CardType.PREPARED}
+              list={prepared}
+              isOpened={true}
+              role={roleId}
+              hero={heroId}
+              isPrepared={true}
+              modifier='player-tablet__group'
+              isActive={isPlayer}
+            />
+          }
+          {
+            items &&
+            <CardGroup 
+              title={CardName.ITEM}
+              type={CardType.ITEM}
+              list={items}
+              isOpened={true}
+              modifier='player-tablet__group'
+              isActive={isPlayer}
+            />
+          }
+        </div>
+      }
     </div>
   )
 }

@@ -25,27 +25,36 @@ const CardGroup = ({
         <span className="h-hidden-label">{title}</span>
       }
       {
-        list.map((listItem, index) => 
-          <Card
-            id={+listItem.id}
-            key={`${index}_${listItem.id}`}
-            type={
-              `${type}${listItem.type && listItem.type !== CardType.CLOSED ? `-${listItem.type}` : ''}`
-            }
-            role={role}
-            hero={hero}
-            isOpened={
-              isOpened || isPrepared || listItem.type === CardType.OPENED 
-                ? true
-                : false
-            }
-            itemTokens={
-              type === CardType.ITEM && listItem.tokens
-              ? +listItem.tokens
-              : 0
-            }
-            isActive={isActive}
-          />
+        list.map((listItem, index) => {
+          const propsId =
+            listItem.id && {
+              id: +listItem.id
+            };
+          const propsItemTokens =
+            (type === CardType.ITEM && listItem.tokens) && {
+              itemTokens: +listItem.tokens
+            };
+            
+          return (
+            <Card
+              key={`${index}${listItem.id ? `_${listItem.id}` : ''}`}
+              type={
+                `${type}${listItem.type && listItem.type !== CardType.CLOSED ? `-${listItem.type}` : ''}`
+              }
+              role={role}
+              hero={hero}
+              isOpened={
+                isOpened || isPrepared || listItem.type === CardType.OPENED 
+                  ? true
+                  : false
+              }
+              isActive={isActive}
+              isNewValue={isNewValue}
+              {...propsId}
+              {...propsItemTokens}
+            />
+            )
+          }
         )
       }
     </div>

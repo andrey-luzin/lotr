@@ -4,7 +4,7 @@ import './Select.scss';
 
 const Select = ({
   onChange = (_e) => null,
-  heroesList = [],
+  list = [],
   value = ""
 }) => {
   /**
@@ -23,7 +23,7 @@ const Select = ({
       >
         <option value="" disabled hidden>Выбери героя</option>
         {
-          heroesList.map((person, index) => 
+          list.map((person, index) => 
             <option
               className="select__option"
               value={person.heroId}

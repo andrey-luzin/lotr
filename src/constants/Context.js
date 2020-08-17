@@ -1,5 +1,5 @@
 const context = {
-  hero: 'hero'
+  heroId: 'hero_id'
 };
 
 export default context;

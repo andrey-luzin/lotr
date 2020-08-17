@@ -9,10 +9,12 @@ const StateProvider = ( { children } ) => {
   const [state, dispatch] = useReducer((state, action) => {
     switch(action.type) {
       case 'setPlayer':
-        if (action.payload !== localStorage.getItem(context.hero)) {
-          localStorage.setItem(context.hero, action.payload);
+        if (action.payload !== localStorage.getItem(context.heroId)) {
+          localStorage.setItem(context.heroId, action.payload);
         }
-        return {...state, hero: action.payload};
+        return {...state, heroId: action.payload};
+      case 'setFirebaseId':
+        return {...state, firebaseId: action.payload};
       default:
         throw new Error();
     };

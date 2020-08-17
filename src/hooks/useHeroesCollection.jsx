@@ -3,7 +3,7 @@ import firebase from 'firebase/app';
 
 import { HeroesCollection } from 'constants/FirebaseConst';
 
-const useCollection = () => {
+const useHeroesCollection = () => {
   const [heroesList, setHeroesList] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -35,4 +35,4 @@ const useCollection = () => {
   };
 };
 
-export default useCollection;
+export default useHeroesCollection;
