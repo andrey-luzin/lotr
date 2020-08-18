@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import firebase from 'firebase/app';
@@ -18,6 +18,10 @@ import context from 'constants/Context';
 import { HeroesCollection } from 'constants/FirebaseConst';
 import usePlayer from 'hooks/usePlayer';
 
+import { store } from 'store/store.js';
+
+import { SET_FIREBASE_ID, SET_PLAYER } from 'constants/Actions';
+
 import { ReactComponent as Arrow } from 'assets/imgs/arrow.svg';
 import inspirationImage from 'assets/imgs/inspiration.jpeg';
 
@@ -31,25 +35,29 @@ const PlayerTablet = ({
   role,
   inspiration,
   maxInspiration,
-  damage,
-  fear,
-  prepared,
-  items
+  damage = [],
+  fear = [],
+  prepared = [],
+  items = []
 }) => { 
   const isPlayer = usePlayer(heroId);
+  const globalState = useContext(store);
+  const { dispatch } = globalState;
 
   const db = firebase.firestore();
 
   const handleOut = () => {
     firebase.auth().signOut().then(() => {
       localStorage.removeItem(context.heroId);
+      dispatch({ type: SET_PLAYER, payload: null });
+      dispatch({ type: SET_FIREBASE_ID, payload: null });
     });
   }
 
   const handleInspirationChange = (number) => {
-    db.collection(HeroesCollection).doc(id).set({
+    db.collection(HeroesCollection).doc(id).update({
       inspiration: number
-    }, { merge: true })
+    })
   }
 
   return (
@@ -118,7 +126,7 @@ const PlayerTablet = ({
           }
         </div>
         {
-          damage &&
+          damage.length &&
           <CardGroup
             title={CardName.DAMAGE}
             type={CardType.DAMAGE}
@@ -128,7 +136,7 @@ const PlayerTablet = ({
           />
         }
         {
-          fear &&
+          fear.length > 0  &&
           <CardGroup
             type={CardType.FEAR}
             title={CardName.FEAR}
@@ -142,7 +150,7 @@ const PlayerTablet = ({
         (prepared || items) &&
         <div className="player-tablet__row player-tablet__row--prepared">
           {
-            prepared &&
+            prepared.length > 0 &&
             <CardGroup
               title={CardName.PREPARED}
               type={CardType.PREPARED}
@@ -156,7 +164,7 @@ const PlayerTablet = ({
             />
           }
           {
-            items &&
+            items.length > 0 &&
             <CardGroup 
               title={CardName.ITEM}
               type={CardType.ITEM}

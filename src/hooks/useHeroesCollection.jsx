@@ -24,7 +24,7 @@ const useHeroesCollection = () => {
         setHeroesList(list);
         setLoading(false);
       }, error => {
-        console.log(`Error from response: ${error}`);
+        console.warn(`Error from response: ${error}`);
         setLoading(false);
       });
   }, [db]);

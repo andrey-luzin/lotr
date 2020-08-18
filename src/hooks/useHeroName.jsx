@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from 'react';
 import { store } from 'store/store.js';
 import context from 'constants/Context';
 
-const useHero = () => {
+const useHeroName = () => {
   const [heroId, setheroId] = useState("");
 
   const globalState = useContext(store);
@@ -20,4 +20,4 @@ const useHero = () => {
   return heroId;
 };
 
-export default useHero;
+export default useHeroName;

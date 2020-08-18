@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useContext } from 'react';
 import firebase from 'firebase/app';
 
 import CardImage from './CardImage';
@@ -8,13 +8,13 @@ import ButtonGroup from 'components/ButtonGroup';
 import Button from 'components/Button';
 import Counter from 'components/Counter';
 
-import useLossCollection from 'hooks/useLossCollection';
+import { store } from 'store/store';
 
 import getOpenedType from 'utils/getOpenedType';
 import getType from 'utils/getType';
 
 import CardType from 'constants/CardType';
-import { DamageCollection } from 'constants/FirebaseConst';
+import { DamageCollection, FearCollection, HeroesCollection } from 'constants/FirebaseConst';
 
 import './Card.scss';
 
@@ -36,22 +36,37 @@ const Card = ({
   isActive = false
 }) => {
   const [isModalOpen, setModalIsOpen] = useState(false);
+  const globalState = useContext(store);
+  const { state } = globalState;
   const db = firebase.firestore();
 
   const toggleModal = () => {
     setModalIsOpen(!isModalOpen);
   };
-
-  const handleDamageCard = () => {
+  
+  /**
+   * @param {string} lossType – тип карты в массивах карт потерь (closed, opened)
+   */
+  const handleLossCard = (lossType) => {
     let card = 0;
-    db.collection(DamageCollection).get().then(snapshot => {
+    db.collection(type).get().then(snapshot => {
       const list = [];
       snapshot.forEach((doc) => {
         list.push(doc.data());
       });
-      card = list[Math.floor(Math.random() * list.length)];
+      card = list[Math.floor(Math.random() * list.length)].id;
+      console.log(card);
+      const arrayObject = {id: card, type: lossType};
+      console.log(arrayObject);
+      db.collection(HeroesCollection).doc(state.firebaseId).update(
+        type === DamageCollection ? {
+          damage: firebase.firestore.FieldValue.arrayUnion(arrayObject)
+        } : type === FearCollection && {
+          fear: firebase.firestore.FieldValue.arrayUnion(arrayObject)
+        }
+      )
     }).catch((error) => {
-      console.log(error);
+      console.warn(error);
     })
   };
   
@@ -134,8 +149,16 @@ const Card = ({
             {
               (type === CardType.DAMAGE || type === CardType.FEAR) &&
               <>
-                <Button text="Закрытый" modifier="inside" onClick={handleDamageCard} />
-                <Button text="Открытый" modifier="inside" onClick={handleDamageCard} />
+                <Button
+                  text="Закрытый"
+                  modifier="inside"
+                  onClick={() => handleLossCard('closed')}
+                />
+                <Button
+                  text="Открытый"
+                  modifier="inside"
+                  onClick={() => handleLossCard('opened')}
+                />
               </>
             }
             {

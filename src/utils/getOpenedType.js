@@ -11,9 +11,7 @@ const getOpenedType = (type, id, role, hero) => {
   switch(type) {
     case CardType.DAMAGE_OPENED:
       return `assets/cards/damages/${id}.jpeg`;
-    case CardType.DAMAGE_CLOSED:
-      return `assets/cards/damages/${id}.jpeg`;
-    case CardType.FEAR:
+    case CardType.FEAR_OPENED:
       return `assets/cards/fears/${id}.jpeg`;
     case CardType.PREPARED_BASE:
       return `assets/cards/basic/${id}.jpeg`;

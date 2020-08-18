@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import firebase from 'firebase/app';
@@ -14,23 +14,23 @@ import Select from 'components/Select';
 import context from 'constants/Context';
 
 import useHeroesCollection from 'hooks/useHeroesCollection';
-import useHero from 'hooks/useHero';
+import useHeroName from 'hooks/useHeroName';
+
+import { SET_PLAYER } from 'constants/Actions';
 
 import './StartPage.scss';
+import { useEffect } from 'react';
 
 const StartPage = () => {
-  // const hero = useHero();
+  const activeHeroName = useHeroName();
   const { heroesList, loading } = useHeroesCollection();
   const globalState = useContext(store);
   const { dispatch } = globalState;
-  const localPlayer  = localStorage.getItem(context.heroId);
   const [heroId, setheroId] = useState('');
 
-  // useEffect(() => {
-  //   if(hero) {
-  //     setheroId(hero)
-  //   }
-  // }, [hero]);
+  useEffect(() => {
+    setheroId(activeHeroName);
+  }, [activeHeroName]);
 
   const handleOnChange = (newValue = '') => {
     setheroId(newValue);
@@ -38,21 +38,9 @@ const StartPage = () => {
 
   const handleAuth = () => {
     firebase.auth().signInAnonymously().then(() =>{
-      dispatch({ type: 'setPlayer', payload: heroId });
+      dispatch({ type: SET_PLAYER, payload: heroId });
     });
   };
-
-  useEffect(() => {
-    if (localPlayer) {
-      setheroId(localPlayer);
-    } else {
-      setheroId('');
-    }
-  }, [localPlayer]);
-
-  if (!heroesList) {
-    return null;
-  }
 
   return (
       <div className="start-page">
@@ -78,17 +66,6 @@ const StartPage = () => {
             >
               Начать
             </Link>
-            <FirebaseAuthConsumer>
-              {({ isSignedIn, user, providerId }) => {
-                return (
-                  <>
-                    <pre style={{ whiteSpace: "normal", wordBreak: "break-all"}}>
-                      {JSON.stringify({ isSignedIn, user, providerId }, null, 2)}
-                    </pre>
-                  </>
-                );
-              }}
-            </FirebaseAuthConsumer>
           </>
         }
       </div>

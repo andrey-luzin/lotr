@@ -9,25 +9,28 @@ import Loader from 'components/Loader';
 import { store } from 'store/store.js';
 
 import useHeroesCollection from 'hooks/useHeroesCollection';
-import useHero from 'hooks/useHero';
+import useHeroName from 'hooks/useHeroName';
+
+import { SET_FIREBASE_ID } from 'constants/Actions';
 
 import './TablePage.scss';
 
 const TablePage = () => {
-  const hero = useHero();
+  const activeHeroName = useHeroName();
   const { heroesList, loading } = useHeroesCollection();
   const globalState = useContext(store);
   const { dispatch } = globalState;
 
   useEffect(() => {
+    !loading && activeHeroName &&
     dispatch({
-      type: 'setFirebaseId', 
+      type: SET_FIREBASE_ID,
       payload: 
-        heroesList.length && heroesList.find(item => {
-          return(item.heroId === hero);
+         heroesList.find(item => {
+          return(item.heroId === activeHeroName);
         }).id
     });
-  }, [heroesList, hero, dispatch]);
+  }, [heroesList, activeHeroName, dispatch, loading]);
 
   return (
     <div className="table-page">

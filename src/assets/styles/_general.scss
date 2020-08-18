@@ -27,3 +27,7 @@ a {
 img {
   max-width: 100%;
 }
+
+*:focus {
+  outline-color: $color-light;
+}
