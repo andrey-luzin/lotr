@@ -39,7 +39,7 @@ const CardGroup = ({
             <Card
               key={`${index}${listItem.id ? `_${listItem.id}` : ''}`}
               type={
-                `${type}${listItem.type && listItem.type !== CardType.CLOSED ? `-${listItem.type}` : ''}`
+                `${type}${isPrepared ? `-${listItem.type}` : ''}`
               }
               role={role}
               hero={hero}

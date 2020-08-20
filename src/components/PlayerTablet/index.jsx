@@ -126,7 +126,7 @@ const PlayerTablet = ({
           }
         </div>
         {
-          damage.length &&
+          damage.length > 0 &&
           <CardGroup
             title={CardName.DAMAGE}
             type={CardType.DAMAGE}
@@ -147,7 +147,7 @@ const PlayerTablet = ({
         }
       </div>
       {
-        (prepared || items) &&
+        (prepared.length > 0 || items.length > 0) &&
         <div className="player-tablet__row player-tablet__row--prepared">
           {
             prepared.length > 0 &&

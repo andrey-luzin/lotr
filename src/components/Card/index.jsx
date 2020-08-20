@@ -34,6 +34,7 @@ const Card = ({
   isChecking = false,
   itemTokens = 0,
   isActive = false
+  //preparedType?
 }) => {
   const [isModalOpen, setModalIsOpen] = useState(false);
   const globalState = useContext(store);
@@ -45,29 +46,58 @@ const Card = ({
   };
   
   /**
-   * @param {string} lossType – тип карты в массивах карт потерь (closed, opened)
+   * @param {string} sideType – тип карты в массивах карт потерь (closed, opened)
    */
-  const handleLossCard = (lossType) => {
-    let card = 0;
+  const getLossCard = (sideType) => {
+    let card = {};
     db.collection(type).get().then(snapshot => {
       const list = [];
       snapshot.forEach((doc) => {
-        list.push(doc.data());
+        console.log(doc.id);
+        list.push(
+          Object.assign(
+            {docId: doc.id},
+            doc.data()
+          )
+        );
       });
-      card = list[Math.floor(Math.random() * list.length)].id;
-      console.log(card);
-      const arrayObject = {id: card, type: lossType};
-      console.log(arrayObject);
-      db.collection(HeroesCollection).doc(state.firebaseId).update(
-        type === DamageCollection ? {
-          damage: firebase.firestore.FieldValue.arrayUnion(arrayObject)
-        } : type === FearCollection && {
-          fear: firebase.firestore.FieldValue.arrayUnion(arrayObject)
-        }
-      )
+      card = list[Math.floor(Math.random() * list.length)];
+
+      db.collection(type).doc(card.docId).delete().then(() => {
+        const arrayObject = {id: card.id, type: sideType};
+        console.log(arrayObject);
+
+        db.collection(HeroesCollection).doc(state.firebaseId).update(
+          type === DamageCollection ? {
+            damage: firebase.firestore.FieldValue.arrayUnion(arrayObject)
+          } : type === FearCollection && {
+            fear: firebase.firestore.FieldValue.arrayUnion(arrayObject)
+          }
+        )
+      }).catch((error) => {
+        console.error("Error removing card: ", error);
+      });
     }).catch((error) => {
-      console.warn(error);
+      console.error("Error gettind card: ", error);
     })
+  };
+
+  const discardCard = () => {
+    if (type === DamageCollection || type === FearCollection) {
+      db.collection(`${type}-discard`).add({id: id}).then(() => {
+        const arrayObject = {id: id, type: isOpened ? CardType.OPENED : CardType.CLOSED};
+
+        db.collection(HeroesCollection).doc(state.firebaseId).update(
+          type === DamageCollection ? {
+            damage: firebase.firestore.FieldValue.arrayRemove(arrayObject)
+          } : type === FearCollection && {
+            fear: firebase.firestore.FieldValue.arrayRemove(arrayObject)
+          }
+        );
+      }).catch((error) => {
+        console.error("Error discard card: ", error);
+      });
+    }
   };
   
   return (
@@ -90,7 +120,7 @@ const Card = ({
               }
               {
                 !isChecking ?
-                <Button text="Скинуть" /> :
+                <Button text="Скинуть" onClick={() => discardCard()} /> :
                 <>
                   <Button text="Подготовить" />
                   <Button text="Наверх"/>
@@ -111,10 +141,6 @@ const Card = ({
             {
               !isOpened &&
               <>
-                {
-                  (type === CardType.DAMAGE || type === CardType.FEAR) &&
-                  <Counter value={2} modifier="inside" />
-                }
                 <Button text="Перевернуть" modifier="inside" />
               </>
             }
@@ -124,7 +150,11 @@ const Card = ({
             }
             {
               !isChecking ?
-              <Button text="Скинуть" modifier="inside" /> :
+              <Button
+                text="Скинуть"
+                modifier="inside"
+                onClick={() => discardCard()}
+              /> :
               <>
                 <Button text="Подготовить" modifier="inside" />
                 <Button text="Наверх" modifier="inside" />
@@ -152,12 +182,12 @@ const Card = ({
                 <Button
                   text="Закрытый"
                   modifier="inside"
-                  onClick={() => handleLossCard('closed')}
+                  onClick={() => getLossCard('closed')}
                 />
                 <Button
                   text="Открытый"
                   modifier="inside"
-                  onClick={() => handleLossCard('opened')}
+                  onClick={() => getLossCard('opened')}
                 />
               </>
             }

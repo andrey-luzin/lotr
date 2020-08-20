@@ -9,9 +9,9 @@ import base from 'assets/imgs/cards/base.jpeg';
  */
 const getOpenedType = (type, id, role, hero) => {
   switch(type) {
-    case CardType.DAMAGE_OPENED:
+    case CardType.DAMAGE:
       return `assets/cards/damages/${id}.jpeg`;
-    case CardType.FEAR_OPENED:
+    case CardType.FEAR:
       return `assets/cards/fears/${id}.jpeg`;
     case CardType.PREPARED_BASE:
       return `assets/cards/basic/${id}.jpeg`;
