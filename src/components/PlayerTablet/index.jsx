@@ -131,7 +131,7 @@ const PlayerTablet = ({
           <CardGroup
             title={CardName.DAMAGE}
             type={CardType.DAMAGE}
-            list={damage}
+            list={damage.sort((a,b) => a.type < b.type && 1)}
             modifier='player-tablet__group'
             isActive={isPlayer}
           />
@@ -141,7 +141,7 @@ const PlayerTablet = ({
           <CardGroup
             type={CardType.FEAR}
             title={CardName.FEAR}
-            list={fear}
+            list={fear.sort((a,b) => a.type < b.type && 1)}
             modifier='player-tablet__group'
             isActive={isPlayer}
           />
