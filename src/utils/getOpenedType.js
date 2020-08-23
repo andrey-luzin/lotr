@@ -21,6 +21,8 @@ const getOpenedType = (type, id, role, hero) => {
       return `assets/cards/classes/${role}/${id}.jpeg`;
     case CardType.ITEM:
       return `assets/cards/items/${id}.jpeg`;
+    case CardType.ADVANTAGE:
+      return `assets/cards/advantages/${id}.jpeg`;
     default:
       return base;
   }

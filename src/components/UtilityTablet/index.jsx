@@ -11,7 +11,7 @@ import { useState } from 'react';
 const UtilityTablet = ({
   className
 }) => {
-  const [utilsIsHidden, setUilsIsHidden] = useState(false);
+  const [utilsIsHidden, setUilsIsHidden] = useState(true);
 
   const handleResize = () => {
     setUilsIsHidden(!utilsIsHidden);
@@ -38,8 +38,14 @@ const UtilityTablet = ({
           title={CardName.ADVANTAGE}
           type={CardType.ADVANTAGE}
           isNewValue
+          isOpened={true}
+          list={[
+            {id: 1},
+            {id: 2},
+            {id: 3}
+          ]}
         />
-        <CardGroup
+        {/* <CardGroup
           title={CardName.ADVANTAGE}
           type={CardType.ADVANTAGE}
           isNewValue
@@ -48,7 +54,7 @@ const UtilityTablet = ({
           title={CardName.ADVANTAGE}
           type={CardType.ADVANTAGE}
           isNewValue
-        />
+        /> */}
         <CardGroup
           title={CardName.WEAKNESS}
           type={CardType.WEAKNESS}

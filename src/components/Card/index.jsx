@@ -82,15 +82,23 @@ const Card = ({
     })
   };
 
+  const getAdvantage = () => {
+    db.collection(HeroesCollection).doc(state.firebaseId).update({
+      advantages: firebase.firestore.FieldValue.arrayUnion({
+        id: id
+      })
+    })
+  };
+
   const discardCard = () => {
-    if (type === DamageCollection || type === FearCollection) {
+    if (type === CardType.DAMAGE || type === CardType.FEAR) {
       db.collection(`${type}-discard`).add({id: id}).then(() => {
         const arrayObject = {id: id, type: isOpened ? CardType.OPENED : CardType.CLOSED};
 
         db.collection(HeroesCollection).doc(state.firebaseId).update(
-          type === DamageCollection ? {
+          type === CardType.DAMAGE ? {
             damage: firebase.firestore.FieldValue.arrayRemove(arrayObject)
-          } : type === FearCollection && {
+          } : type === CardType.FEAR && {
             fear: firebase.firestore.FieldValue.arrayRemove(arrayObject)
           }
         );
@@ -98,8 +106,16 @@ const Card = ({
         console.error("Error discard card: ", error);
       });
     }
+
+    if (type === CardType.ADVANTAGE) {
+      db.collection(HeroesCollection).doc(state.firebaseId).update({
+        advantages: firebase.firestore.FieldValue.arrayRemove({
+          id: id
+        })
+      })
+    }
   };
-  
+
   return (
     <div
       className={`
@@ -109,7 +125,7 @@ const Card = ({
       onClick={!isActive ? toggleModal : null}
     >
       {
-        (isOpened && isModalOpen) &&
+        (isOpened && !isNewValue && isModalOpen) &&
         <Modal onRequestClose={toggleModal}>
           {
             isActive &&
@@ -129,9 +145,7 @@ const Card = ({
               }
             </ButtonGroup>
           }
-          <CardImage
-            source={isOpened ? getOpenedType(type, id, role, hero) : getType(type)}
-          />
+          <CardImage source={isOpened ? getOpenedType(type, id, role, hero) : getType(type)} />
         </Modal>
       }
       {
@@ -140,9 +154,7 @@ const Card = ({
           <ButtonGroup>
             {
               !isOpened &&
-              <>
-                <Button text="Перевернуть" modifier="inside" />
-              </>
+              <Button text="Перевернуть" modifier="inside" />
             }
             {
               itemTokens > 0 &&
@@ -172,8 +184,8 @@ const Card = ({
           </ButtonGroup>
         </div>
       }
-      { 
-        (isNewValue && !isOpened) &&
+      {
+        isNewValue &&
         <div className="card__inside">
           <ButtonGroup>
             {
@@ -192,8 +204,16 @@ const Card = ({
               </>
             }
             {
-              (type === CardType.ADVANTAGE || type === CardType.WEAKNESS) &&
-              <Button text="Взять" modifier="inside" />
+              type === CardType.ADVANTAGE &&
+              <Button
+                text="Взять"
+                modifier="inside"
+                onClick={getAdvantage}
+              />
+            }
+            {
+             type === CardType.WEAKNESS &&
+             <Button text="Взять" modifier="inside" />
             }
           </ButtonGroup>
         </div>

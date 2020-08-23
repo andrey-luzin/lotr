@@ -38,7 +38,8 @@ const PlayerTablet = ({
   damage = [],
   fear = [],
   prepared = [],
-  items = []
+  items = [],
+  advantages = []
 }) => { 
   const isPlayer = usePlayer(heroId);
   const globalState = useContext(store);
@@ -147,7 +148,11 @@ const PlayerTablet = ({
         }
       </div>
       {
-        (prepared.length > 0 || items.length > 0) &&
+        (
+          prepared.length > 0 ||
+          items.length > 0 ||
+          advantages.length > 0
+        ) &&
         <div className="player-tablet__row player-tablet__row--prepared">
           {
             prepared.length > 0 &&
@@ -165,10 +170,21 @@ const PlayerTablet = ({
           }
           {
             items.length > 0 &&
-            <CardGroup 
+            <CardGroup
               title={CardName.ITEM}
               type={CardType.ITEM}
               list={items}
+              isOpened={true}
+              modifier='player-tablet__group'
+              isActive={isPlayer}
+            />
+          }
+          {
+            advantages.length > 0 &&
+            <CardGroup
+              title={CardName.ADVANTAGE}
+              type={CardType.ADVANTAGE}
+              list={advantages}
               isOpened={true}
               modifier='player-tablet__group'
               isActive={isPlayer}
