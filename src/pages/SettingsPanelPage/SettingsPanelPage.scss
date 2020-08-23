@@ -1,0 +1,10 @@
+@import "../../assets/styles/variables";
+@import "../../assets/styles/mixins";
+
+.settings-panel-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+}
