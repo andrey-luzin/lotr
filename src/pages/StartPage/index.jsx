@@ -3,15 +3,11 @@ import { Link } from 'react-router-dom';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import {
-  FirebaseAuthConsumer
-} from "@react-firebase/auth";
 
 import Loader from 'components/Loader';
 
 import { store } from 'store/store.js';
 import Select from 'components/Select';
-import context from 'constants/Context';
 
 import useHeroesCollection from 'hooks/useHeroesCollection';
 import useHeroName from 'hooks/useHeroName';

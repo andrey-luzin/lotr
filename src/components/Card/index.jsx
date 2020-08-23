@@ -14,7 +14,7 @@ import getOpenedType from 'utils/getOpenedType';
 import getType from 'utils/getType';
 
 import CardType from 'constants/CardType';
-import { DamageCollection, FearCollection, HeroesCollection } from 'constants/FirebaseConst';
+import { HeroesCollection } from 'constants/FirebaseConst';
 
 import './Card.scss';
 
@@ -68,9 +68,9 @@ const Card = ({
         console.log(arrayObject);
 
         db.collection(HeroesCollection).doc(state.firebaseId).update(
-          type === DamageCollection ? {
+          type === CardType.DAMAGE ? {
             damage: firebase.firestore.FieldValue.arrayUnion(arrayObject)
-          } : type === FearCollection && {
+          } : type === CardType.FEAR && {
             fear: firebase.firestore.FieldValue.arrayUnion(arrayObject)
           }
         )
@@ -109,9 +109,7 @@ const Card = ({
 
     if (type === CardType.ADVANTAGE) {
       db.collection(HeroesCollection).doc(state.firebaseId).update({
-        advantages: firebase.firestore.FieldValue.arrayRemove({
-          id: id
-        })
+        advantages: firebase.firestore.FieldValue.arrayRemove({ id: id })
       })
     }
   };

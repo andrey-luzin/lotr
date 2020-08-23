@@ -8,13 +8,11 @@ import CardName from 'constants/CardName';
 import './UtilityTablet.scss';
 import { useState } from 'react';
 
-const UtilityTablet = ({
-  className
-}) => {
-  const [utilsIsHidden, setUilsIsHidden] = useState(true);
+const UtilityTablet = ({ className }) => {
+  const [utilsIsHidden, setUtilsIsHidden] = useState(false);
 
   const handleResize = () => {
-    setUilsIsHidden(!utilsIsHidden);
+    setUtilsIsHidden(!utilsIsHidden);
   }
 
   return (
@@ -45,16 +43,6 @@ const UtilityTablet = ({
             {id: 3}
           ]}
         />
-        {/* <CardGroup
-          title={CardName.ADVANTAGE}
-          type={CardType.ADVANTAGE}
-          isNewValue
-        />
-        <CardGroup
-          title={CardName.ADVANTAGE}
-          type={CardType.ADVANTAGE}
-          isNewValue
-        /> */}
         <CardGroup
           title={CardName.WEAKNESS}
           type={CardType.WEAKNESS}

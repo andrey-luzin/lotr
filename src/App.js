@@ -12,6 +12,7 @@ import { StateProvider } from 'store/store.js';
 import StartPage from 'pages/StartPage';
 import TablePage from 'pages/TablePage';
 import CheckPage from 'pages/CheckPage';
+import SettingsPanelPage from 'pages/SettingsPanelPage';
 
 import './assets/styles/_general.scss';
 
@@ -26,6 +27,7 @@ const App = () => {
             <Route path="/" exact component={StartPage} />
             <Route path="/table" component={TablePage} />
             <Route path="/check" component={CheckPage} />
+            <Route path="/settings-panel" component={SettingsPanelPage} />
           </Switch>
           {/* <IfFirebaseUnAuthed>
             {() => <Redirect to="/"/>}
