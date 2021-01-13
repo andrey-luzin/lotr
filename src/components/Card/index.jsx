@@ -53,7 +53,6 @@ const Card = ({
     db.collection(type).get().then(snapshot => {
       const list = [];
       snapshot.forEach((doc) => {
-        console.log(doc.id);
         list.push(
           Object.assign(
             {docId: doc.id},
@@ -65,8 +64,6 @@ const Card = ({
 
       db.collection(type).doc(card.docId).delete().then(() => {
         const arrayObject = {id: card.id, type: sideType};
-        console.log(arrayObject);
-
         db.collection(HeroesCollection).doc(state.firebaseId).update(
           type === CardType.DAMAGE ? {
             damage: firebase.firestore.FieldValue.arrayUnion(arrayObject)
@@ -151,6 +148,14 @@ const Card = ({
         <div className="card__inside">
           <ButtonGroup>
             {
+              isOpened &&
+              <Button
+                text="Увеличить"
+                modifier="inside"
+                onClick={toggleModal}
+              />
+            }
+            {
               !isOpened &&
               <Button text="Перевернуть" modifier="inside" />
             }
@@ -170,14 +175,6 @@ const Card = ({
                 <Button text="Наверх" modifier="inside" />
                 <Button text="Вниз" modifier="inside" />
               </>
-            }
-            {
-              isOpened &&
-              <Button
-                text="Увеличить"
-                modifier="inside"
-                onClick={toggleModal}
-              />
             }
           </ButtonGroup>
         </div>

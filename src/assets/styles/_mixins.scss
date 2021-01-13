@@ -88,3 +88,15 @@
   cursor: $cursor;
   opacity: .6;
 }
+
+%buttonBorder {
+  @extend %after;
+
+  &:not(:last-child):after {
+    width: 100%;
+    height: 1px;
+    background-color: $color-light;
+    left: 0;
+    bottom: rem(-8px);
+  }
+}

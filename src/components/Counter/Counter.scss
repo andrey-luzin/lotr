@@ -8,6 +8,7 @@
   justify-content: space-between;
   border: 1px solid $color-light;
   background-color: rgba($color-dark, .25);
+  @extend %buttonBorder;
   
   &--inside {
     background-color: rgba($color-dark, .7);
